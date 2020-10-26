@@ -1,0 +1,30 @@
+.checkoutcontainer{
+	padding: 0px 20px 20px 40%;
+}
+.checkoutcontainer label{
+	display: block;
+	margin-bottom: 5px;
+}
+
+.checkoutcontainer input[type=text]{
+	width: 40%;
+	margin-bottom: 20px;
+	padding: 10px;
+	border: 1px solid #cccccc;
+}
+
+.greencheckoutbutton {
+	background-color: #00cc00;
+	color: white;
+	padding: 10px 10px 10px;
+	margin: 10px 0;
+	width: 100%;
+	cursor: pointer;
+	border-radius: 3px;
+	font-size: 20px;
+	border: none;
+}
+
+.greencheckoutbutton:hover {
+	background-color: #009900;
+}
