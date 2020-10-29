@@ -1,0 +1,142 @@
+header{
+  background-color: #000000;
+  font-size: 140%px;
+  padding: 10px 10px 10px 50px;
+}
+
+body {
+  background-color: #d7ecee;
+  color: #330000; 
+  font-family: Tahoma, Verdana, sans-serif; 
+}
+
+.topnavbar{
+  text-align: center;
+  overflow: hidden;
+  background-color:#99ddff;
+  height:60px;
+}
+
+.topnavbar a {
+  float:left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 15px 35px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.topnavbar a:hover {
+  background-color: #52b5ff;
+  color: black;
+  height: 40px;
+}
+
+.topnavbar a.active {
+  background-color: #1f8ddf;
+  color: white;
+  height: 40px;
+}
+
+footer {
+  font-size: 70%;
+  text-align: center;
+  color: #000000;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #99ddff;
+}
+
+img { 
+  vertical-align: middle; 
+}
+
+nav { text-align: center; 
+   padding: 0px 20px;
+   float: left;
+   width: 200px;
+   font-weight: bold;
+   padding-top: 10px; 
+   background-color: #d5ede5;}
+
+nav a { text-decoration: none; }
+nav a:link { color: #4d9900; }
+nav a:visited { color: #007a02; }
+nav a:hover { color: #30c6fc; }
+nav ul { list-style-type: none; }
+
+main { padding: 10px 20px 30px 20px;
+  margin-left: 150px;
+  background-color: #d7ecee;
+  color: #000000;
+  overflow: auto;
+}
+
+.toproductbutton{
+  background-color: #d1d1d1;
+  padding: 10px 10px 10px;
+  margin: 10px 0;
+  width: 33%;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 20px;
+}
+
+.toproductbutton:hover{
+  background-color: #b3b3b3;
+}
+li {
+   margin-bottom: 10px;   
+}
+
+ul.none{
+  padding-bottom: 14px;
+  padding-left: 0;
+  list-style-type:none;
+}​
+
+ul.circle {
+  list-style-type:circle;
+}
+
+td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.btnadd {
+  background-color: #e6ac00;
+  color: white;
+  padding: 10px 10px 10px;
+  margin: 10px 0;
+  width: 250px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 20px;
+  border: none;
+  float: right;
+  display: inline;
+}
+
+.btnadd:hover {
+  background-color: #cc9900;
+}
+
+.btncart {
+  background-color: #00ace6;
+  color: white;
+  padding: 10px 10px 10px;
+  margin: 10px 0;
+  width: 250px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 20px;
+  border: none;
+  float: left;
+  display: inline;
+}
+
+.btncart:hover {
+  background-color: #0086b3;
+}
