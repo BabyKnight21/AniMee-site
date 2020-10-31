@@ -1,0 +1,38 @@
+.checkoutcontainer{
+	padding: 0px 20px 20px 40%;
+}
+.checkoutcontainer label{
+	display: block;
+	margin-bottom: 5px;
+}
+
+.checkoutcontainer input[type=text]{
+	width: 40%;
+	margin-bottom: 20px;
+	padding: 10px;
+	border: 1px solid #cccccc;
+}
+
+.greencheckoutbutton {
+	background-color: #547e9e;
+	color: white;
+	padding: 10px 10px 10px;
+	margin: 10px 0;
+	width: 50%;
+	cursor: pointer;
+	border-radius: 3px;
+	font-size: 20px;
+	border: none;
+}
+
+.greencheckoutbutton:hover {
+	background-color: #334d61;
+}
+
+.triangle-right {
+	width: 0;
+	height: 0;
+	border-top: 25px solid transparent;
+	border-left: 50px solid #555;
+	border-bottom: 25px solid transparent;
+}

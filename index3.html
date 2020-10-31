@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="css/login.css">
+<script src="index.js"></script>
 <body>
 <div class="topnavbar">
 	<img src="holo_trans.png" width="80px" height="59px" align=left>
@@ -13,7 +14,7 @@
 	<a href="orders.html">Orders</a>
 	<a href="customercare.html">Customer Care</a>
 	<a href="sitemap.html">Sitemap</a>
-	<a id="myBtn" href="#">Login</a>
+	<a id="myBtn">Login</a>
 </div>
 <div id="rightcolumn">
 	<h3 style="text-align:center"> ON SALE </h3>
@@ -58,10 +59,35 @@
 	</div>
 </div> 
 
-<!--Put in external JS-->
-<script src="login.js"></script>
-
 </body>
+<!-- <script>
+	
+// Get the logincontainer
+var logincontainer = document.getElementById("popuplogin");
+
+// Get the button that opens the logincontainer
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the logincontainer
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the logincontainer 
+btn.onclick = function() {
+  logincontainer.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the logincontainer
+span.onclick = function() {
+  logincontainer.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the logincontainer, close it
+window.onclick = function(event) {
+  if (event.target == logincontainer) {
+    logincontainer.style.display = "none";
+  }
+}
+</script> -->
 <footer>
 <small><i>Copyright &copy; 2020 AniMee </i><br>
 Email to: <a href="mailto:animeee@eee.com.sg">animeee@eee.com.sg</a></small>
