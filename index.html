@@ -5,6 +5,15 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="style.css">
 </head>
+<script language="JavaScript" type="text/javascript">
+	function login(toggle){
+		if(toggle == "show"){
+			document.getElementById('popuplogin').style.visibility="visible";
+		}else if(toggle == "hide"){
+			document.getElementById('popuplogin').style.visibility="hidden"; 
+		}
+	}
+</script>
 <body>
 <div class="topnavbar">
 	<img src="holo_trans.png" width="80px" height="59px" align=left>
@@ -13,7 +22,16 @@
 	<a href="orders.html">Orders</a>
 	<a href="customercare.html">Customer Care</a>
 	<a href="sitemap.html">Sitemap</a>
-	<a href="login.html">Login</a>
+	<a href="javascript:login('show');">Login</a>
+	<div id="popuplogin" style="visibility:hidden"> 
+		<form name="login" action="login.php" method="post">
+		<tr>Username:<input name="email" /></tr>
+		<tr>Password:<input name="password" type="password" size="3o"/></tr>
+		<input type="submit" name="submit" value="Login" />	
+		</form>
+		<a href="javascript:login('hide');">Close Popup</a>
+		<a href="registration1.html">Register Now!</a>
+	</div> 
 </div>
 <div id="rightcolumn">
 	<h3 style="text-align:center"> ON SALE </h3>

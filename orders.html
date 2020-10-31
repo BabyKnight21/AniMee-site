@@ -4,48 +4,40 @@
 	<title>AniMee</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="css/checkout.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><!--fa-fa icons-->
 </head>
+<style>
+	input{
+		height:50px;
+		width:30%;
+		font-size: 20px;
+	}
+</style>
 <body>
 <div class="topnavbar">
 	<img src="holo_trans.png" width="80px" height="59px" align=left>
 	<a href="index.html">Home</a>
 	<a href="product.html">Products</a>
-	<a class="active" href="orders.html">Orders</a>
+	<a class="active"href="orders.html">Orders</a>
 	<a href="customercare.html">Customer Care</a>
 	<a href="sitemap.html">Sitemap</a>
-  <a href="login.html">Login</a>
+	<a href="login.html">Login</a>
 </div>
-
-<div class="checkoutcontainer">
-  <h2>CART <i class="fa fa-shopping-cart"></i></h2>
-  <span class="price" style="color:black"></span>
-  <table border="2">
-  <thead>
-    <tr>
-      <th>Product</th>
-      <th>Price</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Insert php code with database here</th>
-      <th>Price</th>
-    </tr>
-  </tbody>
-  <tfoot>
-  <tr>
-    <th align='right'>Total:</th><br>
-    <th align='right'>$<?php echo number_format($total, 2); ?></th>
-  </tr>
-</table>
-
-<form action="payment.html">
-  <input type="submit" value="Continue to checkout">
+<div style="text-align:center; font-size:x-large; float:inline start; float:left; padding:30px 0px 30px 20%">
+Ready to checkout?<br>
+<img src="payingmoney.jpg" height=300px width=500px>
+<!--Img src: https://knowyourmeme.com/memes/yuu-buys-a-cookie-->
+<form action="cart.php">
+<input type="submit" value="Go to Cart" style="width:250px">
 </form>
 </div>
 
+<div style="text-align:center; font-size:x-large; padding:30px 300px 30px 0px">
+Ordered something before?<br>
+<img src="thinking.png" height=300px width=500px>
+<!--Img src:https://www.pngkey.com/png/detail/315-3152007_png-animuthinku-thinking-meme-face-anime.png-->
+<form action="tracking.html">
+<input type="submit" value="Track Previous Order" style="width:400px">
+</form>
 </div>
 </body>
 <footer>
