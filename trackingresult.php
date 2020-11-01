@@ -7,28 +7,71 @@
   <link rel="stylesheet" href="css/checkout.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><!--fa-fa icons-->
 </head>
+<?php
+include "dbconnect.php";
+session_start();
+
+if (isset($_POST['email']) && isset($_POST['password'])){
+	$email = $_POST['email'];
+	$enter_password = $_POST['password'];
+	
+	$hashedpassword = "SELECT `password` FROM customers WHERE `email`='$email' ";
+	$result = mysqli_query($conn,$hashedpassword);
+	$row=mysqli_fetch_assoc($result);
+	$dbpassword=reset($row);
+
+	//if (password_verify($enter_password, $dbpassword)) {
+	if (sha1($enter_password)==$dbpassword){
+	// Correct password
+		// if valid user, assign session id
+		$_SESSION['valid_user'] = $email;
+	}
+	mysqli_close($conn);
+}
+?>
 <body>
 <div class="topnavbar">
 	<img src="holo_trans.png" width="80px" height="59px" align=left>
-	<a href="index.html">Home</a>
-	<a href="product.html">Products</a>
-	<a class="active" href="orders.html">Orders</a>
-	<a href="customercare.html">Customer Care</a>
-	<a href="sitemap.html">Sitemap</a>
-  <a href="login.html">Login</a>
+	<a href="index.php">Home</a>
+	<a href="product.php">Products</a>
+	<a class="active" href="orders.php">Orders</a>
+	<a href="customercare.php">Customer Care</a>
+	<a href="sitemap.php">Sitemap</a>
+	<?php 
+	if (isset($_SESSION['valid_user'])){
+		echo "<a href='memberaccount.php'>".$_SESSION['valid_user']."'s Account</a>";
+		echo "<a href='logout.php'>Log out</a>";
+	}
+	else{
+		if (isset($email)){
+			echo('Failed to log in. Please try again.');
+			echo "<a id='myBtn' href='#'>Login</a>";
+		}
+		else {
+		echo "<a id='myBtn' href='#'>Login</a>";
+		}
+	}
+	?> 	
 </div>
 
+<div class="logincontainer" id="popuplogin">
+	<div class="logincontainer-content">
+		<span class="close">&times;</span> 
+		<form name="login" action="index.php" method="post">
+		<h3> Login Page </h3>
+		<p>Username:<input name="email" /><br>
+		Password: <input name="password" type="password"><br>
+		<input type="submit" name="submit" value="Login" />	
+		</form>
+		Don't have an account? <a href="registration1.php">Register Now!</a>
+	</div>
+</div> 
+<!--external JS for login popup-->
+<script src="login.js"></script>
+<link rel="stylesheet" href="css/login.css">
+
 <?php
-	$servername = "localhost";
-	$username = "f33ee";
-	$password = "f33ee";
-	$dbname = "f33ee";
-
-	$conn=mysqli_connect($servername,$username,$password,$dbname);
-	if (!$conn){
-		die("Connection failed: " . mysqli_connct_error());
-    }
-
+    include "dbconnect.php";
 	  $email=$_POST['email'];
     $order_num=$_POST['order'];
 
@@ -47,7 +90,7 @@
         //change styling for no result? font size style etc
         echo "<div class='checkoutcontainer'>";
         echo "<h3>No results found. Please check your entries.</h3><br>";
-        echo "<a href='tracking.html'>Click here to try again!";
+        echo "<a href='tracking.php'>Click here to try again!";
         echo "</div>";
     }
     else{

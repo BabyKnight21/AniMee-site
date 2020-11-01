@@ -18,32 +18,34 @@
 <body>
 <div class="topnavbar">
 	<img src="holo_trans.png" width="80px" height="59px" align=left>
-	<a class="active"href="index.html">Home</a>
-	<a href="product.html">Products</a>
-	<a href="orders.html">Orders</a>
-	<a href="customercare.html">Customer Care</a>
-	<a href="sitemap.html">Sitemap</a>
-	<a href="javascript:login('show');">Login</a>
-	<div id="popuplogin" style="visibility:hidden"> 
-		<form name="login" action="login.php" method="post">
-		<tr>Username:<input name="email" /></tr>
-		<tr>Password:<input name="password" type="password" size="3o"/></tr>
+	<a href="index.php">Home</a>
+	<a href="product.php">Products</a>
+	<a href="orders.php">Orders</a>
+	<a href="customercare.php">Customer Care</a>
+	<a href="sitemap.php">Sitemap</a>
+    <a class="active" href="#">Register</a>
+    
+</div>
+
+<div class="logincontainer" id="popuplogin">
+	<div class="logincontainer-content">
+		<span class="close">&times;</span> 
+		<form name="login" action="index.php" method="post">
+		<h3> Login Page </h3>
+		<p>Username:<input name="email" /><br>
+		Password: <input name="password" type="password"><br>
 		<input type="submit" name="submit" value="Login" />	
 		</form>
-		<a href="javascript:login('hide');">Close Popup</a>
-		<a href="registration.php">Register Now!</a>
-	</div> 
-</div>
+		Don't have an account? <a href="registration1.php">Register Now!</a>
+	</div>
+</div> 
+
+
+<link rel="stylesheet" href="css/login.css">
+
 <div class="checkoutcontainer">
     <?php 
-        $servername = "localhost";
-        $username = "f33ee";
-        $password = "f33ee";
-        $dbname = "f33ee";
-        $conn=mysqli_connect($servername,$username,$password,$dbname);
-        if (!$conn){
-            die("Connection failed: " . mysqli_connct_error());
-        }
+        include "dbconnect.php";
 
         $email = $_POST['email'];
         $password = $_POST['password1'];
@@ -51,7 +53,7 @@
 
         if ($password != $password2) {
             echo "Sorry! Passwords do not match <br>";
-            echo"<a href='registration1.html'>Click here to try again</a>";
+            echo"<a href='registration1.php'>Click here to try again</a>";
             exit;
         }
         
@@ -60,31 +62,34 @@
         $checkrows=mysqli_num_rows($checkdup);
         if ($checkrows>0){
             echo "Sorry! Email already registered! <br>";
-            echo"<a href='registration1.html'>Click here to try again</a>";
-            exit;
+            echo"<a href='registration1.php'>Click here to try again</a>";
+            exit;   
         }
         //encrypt 
-        $password=sha1($password);
+        //$hashedpassword = password_hash($password, PASSWORD_DEFAULT);
+        $hashedpassword=sha1($password2);
+
         //get join date, php server date is 1day behind???
         //$joindate=date("Y-m-d");
         $joindate=date('Y-m-d', strtotime(' +1 day'));
         $sql = "INSERT INTO customers(`email`,`password`,`membertype`,`joindate`) 
-        VALUES ('$email','$password','member','$joindate')";
+        VALUES ('$email','$hashedpassword','member','$joindate')";
         $result= mysqli_query($conn,$sql);
         if (!result){
             echo "Sorry! Failed to create account. Duplicate email exists. <br>";
-            echo "<a href='registration1.html'>Click here to try again</a>";
+            echo "<a href='registration1.php'>Click here to try again</a>";
         }
         else{
             echo "Welcome to AniMee, ". $email . ". You are now registered. Join Date: ".$joindate;
-            echo "<a href='product.html'>Start Shopping Now!</a>";
+            echo "<a id='myBtn' href='#'>Login</a>";
         }
 
         mysqli_close($conn);
     ?>
 
 </div>
-
+<!--external JS for login popup-->
+<script src="login.js"></script>
 
 
 </body>

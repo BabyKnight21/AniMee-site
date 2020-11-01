@@ -13,30 +13,74 @@
   }
 </style>
 <?php
-  $servername = "localhost";
-  $username = "f33ee";
-  $password = "f33ee";
-  $dbname = "f33ee";
-
-  $conn=mysqli_connect($servername,$username,$password,$dbname);
-  if (!$conn){
-    die("Connection failed: " . mysqli_connct_error());
-  }
+  include "../dbconnect.php";
 
   $sql = "SELECT * FROM products WHERE productid=12";	
   $result=mysqli_query($conn,$sql);
   $row=mysqli_fetch_assoc($result);
 ?>
+
+<?php
+include "../dbconnect.php";
+session_start();
+
+if (isset($_POST['email']) && isset($_POST['password'])){
+  $email = $_POST['email'];
+  $enter_password = $_POST['password'];
+  
+  $hashedpassword = "SELECT `password` FROM customers WHERE `email`='$email' ";
+  $result2 = mysqli_query($conn,$hashedpassword);
+  $row2=mysqli_fetch_assoc($result);
+  $dbpassword=reset($row2);
+
+  //if (password_verify($enter_password, $dbpassword)) {
+  if (sha1($enter_password)==$dbpassword){
+  // Correct password
+    // if valid user, assign session id
+    $_SESSION['valid_user'] = $email;
+  }
+  mysqli_close($conn);
+}
+?>
 <body>
 <div class="topnavbar">
-	<img src="../holo_trans.png" width="80px" height="59px" align=left>
-	<a href="../index.html">Home</a>
-	<a class="active" href="../product.html">Products</a>
-	<a href="../orders.php">Orders</a>
-	<a href="../customercare.html">Customer Care</a>
-	<a href="../sitemap.html">Sitemap</a>
-	<a href="../login.html">Login</a>
+  <img src="../holo_trans.png" width="80px" height="59px" align=left>
+  <a href="../index.php">Home</a>
+  <a class='active' href="../product.php">Products</a>
+  <a href="../orders.php">Orders</a>
+  <a href="../customercare.php">Customer Care</a>
+  <a href="../sitemap.php">Sitemap</a>
+  <?php 
+  if (isset($_SESSION['valid_user'])){
+    echo "<a href='../memberaccount.php'>".$_SESSION['valid_user']."'s Account</a>";
+    echo "<a href='../logout.php'>Log out</a>";
+  }
+  else{
+    if (isset($email)){
+      echo('Failed to log in. Please try again.');
+      echo "<a id='myBtn' href='#'>Login</a>";
+    }
+    else {
+    echo "<a id='myBtn' href='#'>Login</a>";
+    }
+  }
+  ?> 
 </div>
+<div class="logincontainer" id="popuplogin">
+  <div class="logincontainer-content">
+    <span class="close">&times;</span> 
+    <form name="login" action="../index.php" method="post">
+    <h3> Login Page </h3>
+    <p>Username:<input name="email" /><br>
+    Password: <input name="password" type="password"><br>
+    <input type="submit" name="submit" value="Login" /> 
+    </form>
+    Don't have an account? <a href="registration1.php">Register Now!</a>
+  </div>
+</div> 
+<!--external JS for login popup-->
+<script src="../login.js"></script>
+<link rel="stylesheet" href="../css/login.css">
 
 <nav>
 	<h2 style="text-align:left"> Quick Links: </h2>
@@ -45,8 +89,8 @@
   <h3>Figurines</h3>
     <ul>
       <h5 style="text-align:left">
-        <li><a href="../figures.html">1/7 Scale</a></li>
-        <li><a href="../figures.html#nendroid">Nendroid</a></li>
+        <li><a href="../figures.php">1/7 Scale</a></li>
+        <li><a href="../figures.php#nendroid">Nendroid</a></li>
       </h5>
     </ul>
   </li>
@@ -54,8 +98,8 @@
   <h3>Posters</h3>
     <ul class="circle">
       <h5 style="text-align:left">
-        <li><a href="../posters.html#wallpaper">Wallpaper</a></li>
-        <li><a href="../posters.html#poster">Mini Poster</a></li>
+        <li><a href="../posters.php#wallpaper">Wallpaper</a></li>
+        <li><a href="../posters.php#poster">Mini Poster</a></li>
       </h5>
     </ul>
   </li>
@@ -63,9 +107,9 @@
 	<h3>Small items</h3>
 		<ul>
 			<h5 style="text-align:left">
-				<li><a href="../small.html">Keychain</a></li>
-				<li><a href="../small.html#acrylic">Acrylic Goods</a></li>
-				<li><a href="../small.html#casing">Phone Casing</a></li>
+				<li><a href="../small.php">Keychain</a></li>
+				<li><a href="../small.php#acrylic">Acrylic Goods</a></li>
+				<li><a href="../small.php#casing">Phone Casing</a></li>
 			</h5>
 		</ul>
 	</li>

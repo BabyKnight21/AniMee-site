@@ -3,7 +3,7 @@ use f33ee;
 create table customers (    
     email char (30) not null primary key,
     customername char (30),
-    password char(30) not null,
+    password char(100) not null,
     membertype char(20) not null,
     customeraddress char (100),
     mobile char(16),
@@ -44,9 +44,9 @@ create table orderdetails (
 
 
 
-insert into customers values
-('admin@animee.com','admin',sha1('password'),'admin',null,null,'2020-10-29'),
-('member@animee.com','member',sha1('password'),'member',null,'12345678','2020-10-30');
+-- insert into customers values
+-- ('admin@animee.com','admin',password_hash('password',PASSWORD_BCRYPT),'admin',null,null,'2020-10-29'),
+-- ('member@animee.com','member',password_hash('password',PASSWORD_BCRYPT),'member',null,'12345678','2020-10-30');
 
 -- insert into member values 
 -- ('member@animee.com',sha1('password'),'member'),
