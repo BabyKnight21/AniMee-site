@@ -10,7 +10,6 @@
 </head>
 <?php  //cart.php
 session_start();
-include "dbconnect.php";
 
 if (!isset($_SESSION['cart'])){
 	$_SESSION['cart'] = array();
@@ -26,11 +25,11 @@ if (isset($_GET['empty'])) {
 <div class="topnavbar">
 	<img src="holo_trans.png" width="80px" height="59px" align=left>
 	<a href="index.php">Home</a>
-	<a class='active' href="product.php">Products</a>
-	<a href="orders.php">Orders</a>
+	<a href="product.php">Products</a>
+	<a  class='active' href="orders.php">Orders</a>
 	<a href="customercare.php">Customer Care</a>
 	<a href="sitemap.php">Sitemap</a>
-	<?php 
+    <?php 
 	if (isset($_SESSION['valid_user'])){
 		echo "<a href='memberaccount.php'>".$_SESSION['valid_user']."'s Account</a>";
 		echo "<a href='logout.php'>Log out</a>";
@@ -77,9 +76,35 @@ while($row = mysqli_fetch_array($result))
     $pricearray[] = $row['price'];
 }
 
+mysqli_close($conn);
 ?>
 <div class="checkoutcontainer">
-  <h2>CART <i class="fa fa-shopping-cart"></i></h2>
+  <?php 
+    $recipient_name=$_POST["fullname"];
+    $recipient_email=$_POST["email"];
+    $recipient_address=$_POST["address"];
+    echo "<h3> Recipient: ".$recipient_name."</h3>";
+    echo "<h3> Email: " .$recipient_email. "</h3>";
+    echo "<h3> Delivery Address: ".$recipient_address."</h3>";
+
+    include "dbconnect.php";  
+    $accountemail=$_SESSION['valid_user'];
+    $currentorder="SELECT MAX(orderid) FROM orders";	
+    $result=mysqli_query($conn,$currentorder);
+    $row=mysqli_fetch_array($result);
+    $currentmax=$row['MAX(orderid)'];
+    $neworder=$currentmax+1;
+    //php server date 1 day behind??
+    $currentdate=date('Y-m-d', strtotime(' +1 day'));
+    echo "<h3>Order ID #".$neworder."</h3>";
+
+    //update orderdetails table (recipient info)
+    $update_orderdetails = "INSERT INTO orderdetails(`orderid`,`email`,`name`,`address`)
+    VALUES ('$neworder','$recipient_email','$recipient_name','$recipient_address')";
+    $result=mysqli_query($conn,$update_orderdetails);
+
+    mysqli_close($conn);
+  ?>
   <span class="price" style="color:black"></span>
   <table border="2">
   <thead>
@@ -91,6 +116,7 @@ while($row = mysqli_fetch_array($result))
   </thead>
   <tbody>
   <?php
+  include "dbconnect.php";
     //$session_cart array storing productid (not simplified)
     $cart_2d = array(array());
     $cart_2d_counter=0;
@@ -107,20 +133,34 @@ while($row = mysqli_fetch_array($result))
       if ($dup==false){
         $cart_2d[$cart_2d_counter]['id']=$_SESSION['cart'][$i];
         $cart_2d[$cart_2d_counter]['count']=1;
-        $cart_2d_counter+=1;
+        $cart_2d_counter+=1;      
       }
     }
-    
+
     $total = 0;
     for ($i=0; $i < count($cart_2d); $i++){
-      echo "<tr>";
-      echo "<th>" .$productarray[$cart_2d[$i]['id']-1]. "</th>";
-      echo "<th>" .$cart_2d[$i]['count']. "</th>";
-      echo "<th> $".number_format($pricearray[$cart_2d[$i]['id']-1]*$cart_2d[$i]['count'], 2). "</th>";
-      echo "</tr>";
-      $total = $total + $pricearray[$cart_2d[$i]['id']-1]*$cart_2d[$i]['count'];
-    }      
+        $itemid=$cart_2d[$i]['id'];
+        $itemqty=$cart_2d[$i]['count'];
+        //update orders table
+        $updateorder="INSERT INTO orders(`email`,orderid,`date`,`productid`,`quantity`)
+        VALUES ('$accountemail','$neworder','$currentdate','$itemid','$itemqty')";
+        $result=mysqli_query($conn,$updateorder);
 
+        //update products table stocks
+        $updatestock= "UPDATE products SET stock=stock-$itemqty WHERE productid='$itemid'";
+        $result=mysqli_query($conn,$updatestock);
+        
+
+        echo "<tr>";
+        echo "<th>" .$productarray[$cart_2d[$i]['id']-1]. "</th>";
+        echo "<th>" .$cart_2d[$i]['count']. "</th>";
+        echo "<th> $".number_format($pricearray[$cart_2d[$i]['id']-1]*$cart_2d[$i]['count'], 2). "</th>";
+        echo "</tr>";
+        $total = $total + $pricearray[$cart_2d[$i]['id']-1]*$cart_2d[$i]['count'];
+    }   
+
+    mysqli_close($conn);
+    
   ?>
   </tbody>
   <tfoot>
@@ -128,14 +168,22 @@ while($row = mysqli_fetch_array($result))
     <th align='right'>Total:</th><br>
     <th align='right'>$<?php echo number_format($total, 2); ?></th>
   </tr>
-  </table>
-  
+</table>
+<?php 
+    //Send Order Email
+    $to      = 'f33ee@localhost';
+    $subject = "Order #".$neworder;
+    $message = 'Thank you for shopping with us. You can track your order using the Order ID and your email.';
+    $headers = 'From: f33ee@localhost' . "\r\n" .
+        'Reply-To: f33ee@localhost' . "\r\n" .
+        'X-Mailer: PHP/' . phpversion();
 
-<a href='payment.php'><button class='btncart'><i class='fa fa-credit-card'></i>Continue to Checkout</button></a>
-<a href="<?php echo $_SERVER['PHP_SELF']; ?>?empty=1"><button class='btnaddincart'><i class='fa fa-shopping-cart'></i>Empty your cart</button></a>
+    mail($to, $subject, $message, $headers,'-ff33ee@localhost');
+    echo "<h4>A confirmation mail has been sent to : ".$to."</h4>";
 
+    unset($_SESSION['cart']);
+?>
 </div>
-
 
 </div>
 </body>

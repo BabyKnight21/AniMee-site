@@ -72,7 +72,7 @@ if (isset($_POST['email']) && isset($_POST['password'])){
 <!-- UNTIL HERE -->
 <div style="padding: 0px 0px 20px 50px">
 	<h2>Q1: WHAT CAN I BUY HERE</h2>
-	<h5><p>Anything that is available in our products page. For more information click here to view our products. <a href="products.php"> Products </a></p>
+	<h5><p>Anything that is available in our products page. For more information click here to view our products. <a href="product.php"> Products </a></p>
 	<br>
 	<h2>Q2: Are products refundable</h2>
 	<h5><p>No</p></h5>

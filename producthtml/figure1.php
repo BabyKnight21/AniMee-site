@@ -6,14 +6,18 @@
 <!--THIS STYLESHEET IS DIFFERENT FROM index-->
 	<link rel="stylesheet" href="../css/leftcolumns.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 </head>
 <style>
   h3 {
     text-align: left;
   }
 </style>
-
+<?php
+  include "../dbconnect.php";
+  $sql = "SELECT * FROM products WHERE productid=1";	
+  $result=mysqli_query($conn,$sql);
+  $row=mysqli_fetch_assoc($result);
+?>
 <!-- For every non-member page here onwards -->
 <!-- After /style to end of top nav bar before quicklinks -->
 <?php
@@ -80,6 +84,17 @@ if (isset($_POST['email']) && isset($_POST['password'])){
 <link rel="stylesheet" href="../css/login.css">
 
 <!-- To here -->
+<?php //cart
+if (!isset($_SESSION['cart'])){
+	$_SESSION['cart'] = array();
+}
+if (isset($_GET['buy'])) {
+	$_SESSION['cart'][] = $_GET['buy'];
+	header('location: ' . $_SERVER['PHP_SELF']. '?' . SID);
+	exit();
+}
+?>
+
 <nav>
 	<h2 style="text-align:left"> Quick Links: </h2>
 	<ul class="none">
@@ -107,18 +122,13 @@ if (isset($_POST['email']) && isset($_POST['password'])){
 			<h5 style="text-align:left">
 				<li><a href="../small.php">Keychain</a></li>
 				<li><a href="../small.php#acrylic">Acrylic Goods</a></li>
-				<li><a href="../small.php#casing">Phone Casing</a></li>
+				<li><a href="../small2.php#casing">Phone Casing</a></li>
 			</h5>
 		</ul>
 	</li>
 	</ul>
 </nav>
-<?php
-  include "../dbconnect.php";
-  $sql = "SELECT * FROM products WHERE productid=1";	
-  $result=mysqli_query($conn,$sql);
-  $row=mysqli_fetch_assoc($result);
-?>
+
 <main>
 <table width=100% height=1000px>
 <thead>
@@ -148,18 +158,31 @@ if (isset($_POST['email']) && isset($_POST['password'])){
       </tr>
       <tr><td>
       <?php
-      if ($row['stock'] == 0){
-        echo "<button disabled class='btnadd'> Out of Stock</div>";
+      $thispageid=1;
+      include "stockcheck.php";
+      if (!$_SESSION['valid_user']){
+        echo "<button disabled class='btncart'>Please Login First To Purchase</div>";
       }
       else{
-        echo "<form action='add.php'>
-        <button class='btnadd'><i class='fa fa-shopping-cart'></i> Add to Cart</ button>";
+        if ($row['stock'] == 0){
+          echo "<button disabled class='btnadd'> Out of Stock</div>";
+        }
+      
+        else if ($notenough==true){
+           echo "<button disabled class='btnadd'>Insufficient Stock</div>";  
+        }
+        else{
+          echo "<button class='btnadd'><a href='" .$_SERVER['PHP_SELF']. "?buy=1' style='text-decoration: none; color:white; '><i class='fa fa-shopping-cart'></i> Add to Cart</a></ button>";
+        }
+        echo "<a href='../cart.php'><button class='btncart'><i class='fa fa-credit-card'></i></a>  Go to Cart</button>";
       }
       ?>
       
-      <a href="../orders.php"><button class="btncart"><i class="fa fa-credit-card"></i>  Go to Cart</button>
       </td>        
       </tr>
+      <tr><td>
+      Your cart contains <?php echo count($_SESSION['cart']); ?> items.
+      </td></tr>
     </table>
   </tr>
 </thead>
@@ -172,8 +195,8 @@ She was formerly a human child princess named Rola (likely meant to be Laura in 
   </tr>
 </tbody>
 </table>
-
 </main>
+
 
 
 

@@ -83,14 +83,23 @@ if (isset($_POST['email']) && isset($_POST['password'])){
 Ready to checkout?<br>
 <img src="payingmoney.jpg" height=300px width=500px>
 <!--Img src: https://knowyourmeme.com/memes/yuu-buys-a-cookie-->
-<form action="cart.php">
-<input type="submit" value="Go to Cart" style="width:250px">
-</form>
+<?php
+if (!$_SESSION['valid_user']){
+    echo "<form >";
+	echo "<input type='submit' value='Please Login First' style='width:250px'>";
+	echo "</form>";
+}
+else{
+	echo "<form action='cart.php'>";
+	echo "<input type='submit' value='Go to Cart' style='width:250px'>";
+	echo "</form>";
+}
+?>
 </div>
 
 <div style="text-align:center; font-size:x-large; padding:30px 300px 30px 0px">
 Ordered something before?<br>
-<img src="thinking.png" height=300px width=500px>
+<img src="thinking.png" height=300px width=530px>
 <!--Img src:https://www.pngkey.com/png/detail/315-3152007_png-animuthinku-thinking-meme-face-anime.png-->
 <form action="tracking.php">
 <input type="submit" value="Track Previous Order" style="width:400px">

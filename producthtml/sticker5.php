@@ -82,6 +82,17 @@ if (isset($_POST['email']) && isset($_POST['password'])){
 <script src="../login.js"></script>
 <link rel="stylesheet" href="../css/login.css">
 
+<?php //cart
+if (!isset($_SESSION['cart'])){
+  $_SESSION['cart'] = array();
+}
+if (isset($_GET['buy'])) {
+  $_SESSION['cart'][] = $_GET['buy'];
+  header('location: ' . $_SERVER['PHP_SELF']. '?' . SID);
+  exit();
+}
+?>
+
 <nav>
 	<h2 style="text-align:left"> Quick Links: </h2>
 	<ul class="none">
@@ -109,7 +120,7 @@ if (isset($_POST['email']) && isset($_POST['password'])){
 			<h5 style="text-align:left">
 				<li><a href="../small.php">Keychain</a></li>
 				<li><a href="../small.php#acrylic">Acrylic Goods</a></li>
-				<li><a href="../small.php#casing">Phone Casing</a></li>
+				<li><a href="../small2.php#casing">Phone Casing</a></li>
 			</h5>
 		</ul>
 	</li>
@@ -144,18 +155,31 @@ if (isset($_POST['email']) && isset($_POST['password'])){
       </tr>
       <tr><td>
       <?php
-      if ($row['stock'] == 0){
-        echo "<button disabled class='btnadd'> Out of Stock</div>";
+      $thispageid=17;
+      include "stockcheck.php";
+      if (!$_SESSION['valid_user']){
+        echo "<button disabled class='btnadd'>Please Login First To Purchase</div>";
       }
       else{
-        echo "<form action='add.php'>
-        <button class='btnadd'><i class='fa fa-shopping-cart'></i> Add to Cart</button>";
+        if ($row['stock'] == 0){
+          echo "<button disabled class='btnadd'> Out of Stock</div>";
+        }
+      
+        else if ($notenough==true){
+           echo "<button disabled class='btnadd'>Insufficient Stock</div>";  
+        }
+        else{
+          echo "<button class='btnadd'><a href='" .$_SERVER['PHP_SELF']. "?buy=17' style='text-decoration: none; color:white; '><i class='fa fa-shopping-cart'></i> Add to Cart</a></ button>";
+        }
+        echo "<a href='../cart.php'><button class='btncart'><i class='fa fa-credit-card'></i></a>  Go to Cart</button>";
       }
       ?>
-      <form action="cart.php">
-      <button class="btncart"><i class="fa fa-credit-card"></i> Go to Cart</button><!---HERE-->
-      </form></td>   
+      
+      </td>        
       </tr>
+      <tr><td>
+      Your cart contains <?php echo count($_SESSION['cart']); ?> items.
+      </td></tr>
     </table>
   </tr>
 </thead>

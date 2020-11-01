@@ -70,17 +70,17 @@ if (isset($_POST['email']) && isset($_POST['password'])){
 
 <div style="padding: 0px 0px 40px 110px">
 <h3>Products</h3>
-<a href="figures.html">Figures</a>
-<a href="posters.html">Posters</a>
-<a href="small.html">Acrylic</a>
+<a href="figures.php">Figures</a>
+<a href="posters.php">Posters</a>
+<a href="small.php">Acrylic</a>
 
 <h3>Enquires</h3>
-<a href="FAQ.html">FAQ</a>
-<a href="customercare.html">Feedback</a>
+<a href="FAQ.php">FAQ</a>
+<a href="customercare.php">Feedback</a>
 
 <h3>Policies</h3>
-<a href="PrivacyPolicy.html">PrivacyPolicy</a>
-<a href="PrivacyPolicy.html#TandS">Terms And Service</a>
+<a href="PrivacyPolicy.php">PrivacyPolicy</a>
+<a href="PrivacyPolicy.php#TandS">Terms And Service</a>
 </div>
 </body>
 <footer>
