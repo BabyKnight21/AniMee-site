@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>AniMee</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/checkout.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><!--fa-fa icons-->
+</head>
+<body>
+<div class="topnavbar">
+	<img src="holo_trans.png" width="80px" height="59px" align=left>
+	<a href="index.html">Home</a>
+	<a href="product.html">Products</a>
+	<a class="active" href="orders.html">Orders</a>
+	<a href="customercare.html">Customer Care</a>
+	<a href="sitemap.html">Sitemap</a>
+  <a href="login.html">Login</a>
+</div>
+
+<div class="checkoutcontainer">
+  <h2>CART <i class="fa fa-shopping-cart"></i></h2>
+  <span class="price" style="color:black"></span>
+  <table border="2">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Insert php code with database here</th>
+      <th>Price</th>
+    </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <th align='right'>Total:</th><br>
+    <th align='right'>$<?php echo number_format($total, 2); ?></th>
+  </tr>
+</table>
+
+<form action="payment.html">
+  <input type="submit" value="Continue to checkout">
+</form>
+</div>
+
+</div>
+</body>
+<footer>
+<small><i>Copyright &copy; 2020 AniMee </i><br>
+Email to: <a href="mailto:animeee@eee.com.sg">animeee@eee.com.sg</a></small>
+</footer>
+</html>
